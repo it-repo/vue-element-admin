@@ -19,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
@@ -45,8 +45,12 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
+    // TODO: 保证 mock 不出错，保留 message
+    res.message = res.msg ? res.msg : res.messag
+
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    // TODO: 保证 mock 不出错，保留 20000
+    if (res.code !== 20000 && res.code !== 0) {
       Message({
         message: res.message || 'Error',
         type: 'error',
