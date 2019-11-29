@@ -1,24 +1,25 @@
 import request from '@/utils/request'
+import { boxURL } from './config'
 
 export function login(data) {
   return request({
-    url: '/user/login',
+    url: boxURL + '/user/login',
     method: 'post',
-    data
+    data,
   })
 }
 
 export function getInfo(token) {
   return request({
-    url: '/user/info',
+    url: boxURL + '/user/info',
     method: 'get',
-    params: { token }
+    params: { token },
   })
 }
 
 export function logout() {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: boxURL + '/user/logout',
+    method: 'post',
   })
 }

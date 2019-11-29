@@ -74,6 +74,43 @@ export const constantRoutes = [
 
 export const asyncRoutes = [
   {
+    path: '/box',
+    component: 'layout/Layout',
+    redirect: 'noRedirect',
+    name: 'box',
+    meta: {
+      title: 'box',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: 'admin',
+        component: 'views/box/admin',
+        name: 'admin-page',
+        meta: { title: 'admin page', noCache: true }
+      },
+      {
+        path: 'editor',
+        component: 'views/box/editor',
+        name: 'editor-page',
+        meta: { title: 'editor page', noCache: true }
+      },
+      {
+        path: 'visitor',
+        component: 'views/box/visitor',
+        name: 'visitor-page',
+        meta: { title: 'visitor page', noCache: true }
+      },
+      {
+        path: 'free',
+        component: 'views/box/free',
+        name: 'free-page',
+        meta: { title: 'free page', noCache: true }
+      },
+    ]
+  },
+
+  {
     path: '/permission',
     component: 'layout/Layout',
     redirect: '/permission/index',

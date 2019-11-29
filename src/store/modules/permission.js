@@ -1,4 +1,5 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { /* asyncRoutes, */ constantRoutes, componentMap } from '@/router'
+import { getRoutes } from '@/api/role'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -36,34 +37,65 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
 }
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
-  }
+  },
+}
+
+function loadComponent(routes) {
+  return routes.map(({
+    path,
+    component,
+    redirect,
+    name,
+    hidden,
+    children,
+    alwaysShow,
+    ...meta
+  }) => {
+    const route = {
+      path,
+      component,
+      redirect,
+      name,
+      hidden,
+      children,
+      alwaysShow,
+      meta,
+    }
+    if (route.component) {
+      const component = `${route.component}`
+      console.log(component)
+      route.component = componentMap[component]
+    }
+    if (route.children) {
+      route.children = loadComponent(route.children)
+    }
+    return route
+  })
 }
 
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      getRoutes().then(res => {
+        const accessedRoutes = loadComponent(res.data)
+        console.log(accessedRoutes)
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
-  }
+  },
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }
