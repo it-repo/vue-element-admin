@@ -34,7 +34,7 @@ import { mockXHR } from '../mock'
 mockXHR()
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'medium', // set element-ui default size
 })
 
 // register global utility filters
@@ -48,5 +48,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
 })

@@ -15,7 +15,7 @@ function registerRoutes(app) {
   const mockRoutesLength = Object.keys(mocks).length
   return {
     mockRoutesLength: mockRoutesLength,
-    mockStartIndex: mockLastIndex - mockRoutesLength
+    mockStartIndex: mockLastIndex - mockRoutesLength,
   }
 }
 
@@ -35,7 +35,7 @@ module.exports = app => {
   // https://expressjs.com/en/4x/api.html#req.body
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
   }))
 
   const mockRoutes = registerRoutes(app)
@@ -45,7 +45,7 @@ module.exports = app => {
   // watch files, hot reload mock server
   chokidar.watch(mockDir, {
     ignored: /mock-server/,
-    ignoreInitial: true
+    ignoreInitial: true,
   }).on('all', (event, path) => {
     if (event === 'change' || event === 'add') {
       try {

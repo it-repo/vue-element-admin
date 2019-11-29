@@ -45,7 +45,7 @@ export default {
       list: null,
       listLoading: true,
       downloadLoading: false,
-      filename: ''
+      filename: '',
     }
   },
   created() {
@@ -71,7 +71,7 @@ export default {
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
-    }
-  }
+    },
+  },
 }
 </script>

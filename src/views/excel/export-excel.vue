@@ -62,7 +62,7 @@ export default {
       downloadLoading: false,
       filename: '',
       autoWidth: true,
-      bookType: 'xlsx'
+      bookType: 'xlsx',
     }
   },
   created() {
@@ -88,7 +88,7 @@ export default {
           data,
           filename: this.filename,
           autoWidth: this.autoWidth,
-          bookType: this.bookType
+          bookType: this.bookType,
         })
         this.downloadLoading = false
       })
@@ -101,8 +101,8 @@ export default {
           return v[j]
         }
       }))
-    }
-  }
+    },
+  },
 }
 </script>
 

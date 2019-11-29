@@ -37,7 +37,7 @@ export default {
       top: 0,
       left: 0,
       selectedTag: {},
-      affixTags: []
+      affixTags: [],
     }
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
     },
     routes() {
       return this.$store.state.permission.routes
-    }
+    },
   },
   watch: {
     $route() {
@@ -59,7 +59,7 @@ export default {
       } else {
         document.body.removeEventListener('click', this.closeMenu)
       }
-    }
+    },
   },
   mounted() {
     this.initTags()
@@ -81,7 +81,7 @@ export default {
             fullPath: tagPath,
             path: tagPath,
             name: route.name,
-            meta: { ...route.meta }
+            meta: { ...route.meta },
           })
         }
         if (route.children) {
@@ -129,7 +129,7 @@ export default {
         const { fullPath } = view
         this.$nextTick(() => {
           this.$router.replace({
-            path: '/redirect' + fullPath
+            path: '/redirect' + fullPath,
           })
         })
       })
@@ -189,8 +189,8 @@ export default {
     },
     closeMenu() {
       this.visible = false
-    }
-  }
+    },
+  },
 }
 </script>
 

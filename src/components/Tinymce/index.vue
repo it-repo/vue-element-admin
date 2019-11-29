@@ -28,33 +28,33 @@ export default {
       type: String,
       default: function() {
         return 'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
-      }
+      },
     },
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     toolbar: {
       type: Array,
       required: false,
       default() {
         return []
-      }
+      },
     },
     menubar: {
       type: String,
-      default: 'file edit insert view format table'
+      default: 'file edit insert view format table',
     },
     height: {
       type: [Number, String],
       required: false,
-      default: 360
+      default: 360,
     },
     width: {
       type: [Number, String],
       required: false,
-      default: 'auto'
-    }
+      default: 'auto',
+    },
   },
   data() {
     return {
@@ -66,8 +66,8 @@ export default {
         'en': 'en',
         'zh': 'zh_CN',
         'es': 'es_MX',
-        'ja': 'ja'
-      }
+        'ja': 'ja',
+      },
     }
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
         return `${width}px`
       }
       return width
-    }
+    },
   },
   watch: {
     value(val) {
@@ -85,7 +85,7 @@ export default {
         this.$nextTick(() =>
           window.tinymce.get(this.tinymceId).setContent(val || ''))
       }
-    }
+    },
   },
   mounted() {
     this.init()
@@ -147,7 +147,7 @@ export default {
           editor.on('FullscreenStateChanged', (e) => {
             _this.fullscreen = e.state
           })
-        }
+        },
         // 整合七牛上传
         // images_dataimg_filter(img) {
         //   setTimeout(() => {
@@ -204,8 +204,8 @@ export default {
       arr.forEach(v => {
         window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -5,7 +5,7 @@ const count = 100
 
 for (let i = 0; i < count; i++) {
   NameList.push(Mock.mock({
-    name: '@first'
+    name: '@first',
   }))
 }
 NameList.push({ name: 'mock-Pan' })
@@ -23,9 +23,9 @@ export default [
       })
       return {
         code: 20000,
-        data: { items: mockNameList }
+        data: { items: mockNameList },
       }
-    }
+    },
   },
 
   // transaction list
@@ -42,10 +42,10 @@ export default [
             timestamp: +Mock.Random.date('T'),
             username: '@name()',
             price: '@float(1000, 15000, 0, 2)',
-            'status|1': ['success', 'pending']
-          }]
-        }
+            'status|1': ['success', 'pending'],
+          }],
+        },
       }
-    }
-  }
+    },
+  },
 ]

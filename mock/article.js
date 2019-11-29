@@ -23,7 +23,7 @@ for (let i = 0; i < count; i++) {
     comment_disabled: true,
     pageviews: '@integer(300, 5000)',
     image_uri,
-    platforms: ['a-platform']
+    platforms: ['a-platform'],
   }))
 }
 
@@ -51,10 +51,10 @@ export default [
         code: 20000,
         data: {
           total: mockList.length,
-          items: pageList
-        }
+          items: pageList,
+        },
       }
-    }
+    },
   },
 
   {
@@ -66,11 +66,11 @@ export default [
         if (article.id === +id) {
           return {
             code: 20000,
-            data: article
+            data: article,
           }
         }
       }
-    }
+    },
   },
 
   {
@@ -84,11 +84,11 @@ export default [
             { key: 'PC', pv: 1024 },
             { key: 'mobile', pv: 1024 },
             { key: 'ios', pv: 1024 },
-            { key: 'android', pv: 1024 }
-          ]
-        }
+            { key: 'android', pv: 1024 },
+          ],
+        },
       }
-    }
+    },
   },
 
   {
@@ -97,9 +97,9 @@ export default [
     response: _ => {
       return {
         code: 20000,
-        data: 'success'
+        data: 'success',
       }
-    }
+    },
   },
 
   {
@@ -108,9 +108,9 @@ export default [
     response: _ => {
       return {
         code: 20000,
-        data: 'success'
+        data: 'success',
       }
-    }
-  }
+    },
+  },
 ]
 

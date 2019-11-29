@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
-import { deepClone } from '../../src/utils/index.js'
-import { asyncRoutes, constantRoutes } from './routes.js'
+// import { deepClone } from '../../src/utils/index.js'
+import { asyncRoutes /*, constantRoutes */ } from './routes.js'
 
 // const routes = deepClone([...constantRoutes, ...asyncRoutes])
 const routes = asyncRoutes
@@ -10,13 +10,13 @@ const roles = [
     key: 'admin',
     name: 'admin',
     description: 'Super Administrator. Have access to view all pages.',
-    routes: routes
+    routes: routes,
   },
   {
     key: 'editor',
     name: 'editor',
     description: 'Normal Editor. Can see all pages except permission page',
-    routes: routes.filter(i => i.path !== '/permission')// just a mock
+    routes: routes.filter(i => i.path !== '/permission'), // just a mock
   },
   {
     key: 'visitor',
@@ -29,11 +29,11 @@ const roles = [
         {
           path: 'dashboard',
           name: 'Dashboard',
-          meta: { title: 'dashboard', icon: 'dashboard' }
-        }
-      ]
-    }]
-  }
+          meta: { title: 'dashboard', icon: 'dashboard' },
+        },
+      ],
+    }],
+  },
 ]
 
 export default [
@@ -56,9 +56,9 @@ export default [
     response: _ => {
       return {
         code: 20000,
-        data: roles
+        data: roles,
       }
-    }
+    },
   },
 
   // add role
@@ -68,9 +68,9 @@ export default [
     response: {
       code: 20000,
       data: {
-        key: Mock.mock('@integer(300, 5000)')
-      }
-    }
+        key: Mock.mock('@integer(300, 5000)'),
+      },
+    },
   },
 
   // update role
@@ -80,9 +80,9 @@ export default [
     response: {
       code: 20000,
       data: {
-        status: 'success'
-      }
-    }
+        status: 'success',
+      },
+    },
   },
 
   // delete role
@@ -92,8 +92,8 @@ export default [
     response: {
       code: 20000,
       data: {
-        status: 'success'
-      }
-    }
-  }
+        status: 'success',
+      },
+    },
+  },
 ]
