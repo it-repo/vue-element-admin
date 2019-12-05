@@ -66,3 +66,25 @@ export function toThousandFilter(num) {
 export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+/**
+ * Format DateTime
+ * @param {String} t
+ */
+export function formatDateTime(t) {
+  const date = new Date(t)
+  const y = formatDateTime_x2(date.getFullYear())
+  const m = formatDateTime_x2(date.getMonth() + 1)
+  const d = formatDateTime_x2(date.getDate())
+  const h = formatDateTime_x2(date.getHours())
+  const min = formatDateTime_x2(date.getMinutes())
+  const s = formatDateTime_x2(date.getSeconds())
+  return `${y}/${m}/${d} ${h}:${min}:${s}`
+}
+
+function formatDateTime_x2(x) {
+  if (x < 10) {
+    return `0${x}`
+  }
+  return x
+}

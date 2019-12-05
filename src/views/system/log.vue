@@ -4,6 +4,11 @@
       <el-table-column prop="ID" label="ID" width="100" />
       <el-table-column prop="UID" label="UID" width="100" />
       <el-table-column prop="Name" label="操作" width="200" />
+      <el-table-column label="时间" width="180" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.CreatedAt | formatDateTime }}
+        </template>
+      </el-table-column>
       <el-table-column prop="Desc" label="详情" />
     </el-table>
 

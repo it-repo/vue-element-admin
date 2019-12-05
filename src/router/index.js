@@ -136,8 +136,8 @@ export const componentMap = {
   'views/box/editor': () => import('@/views/box/editor'),
   'views/box/visitor': () => import('@/views/box/visitor'),
   'views/box/free': () => import('@/views/box/free'),
-  'views/system/info': () => import('@/views/system/info'),
   'views/system/log': () => import('@/views/system/log'),
+  'views/system/user': () => import('@/views/system/user'),
 }
 
 /**

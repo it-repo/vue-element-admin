@@ -3,7 +3,7 @@ import { boxURL } from './config'
 
 export function getRoutes() {
   return request({
-    url: boxURL + '/routes',
+    url: `${boxURL}/routes`,
     method: 'get',
   })
 }
