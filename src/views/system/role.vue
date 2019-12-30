@@ -20,18 +20,10 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column prop="name" label="用户名" width="160" />
-      <el-table-column prop="nick" label="昵称" width="160" />
-      <!--
-      <el-table-column label="头像" width="50" align="center">
-        <template slot-scope="scope">
-          <img class="avatar" :src="scope.row.avatar">
-        </template>
-      </el-table-column>
-      <el-table-column prop="desc" label="详情" />
-      -->
-      <el-table-column label="角色">
-        <template slot-scope="scope">{{ scope.row.Roles | formatRoles(roles) }}</template>
+      <el-table-column prop="Name" label="角色" width="160" />
+      <el-table-column prop="Desc" label="详情" />
+      <el-table-column label="权限">
+        <template slot-scope="scope">{{ scope.row.Perms | formatPerms(perms) }}</template>
       </el-table-column>
       <el-table-column label="创建时间" width="180" align="center">
         <template slot-scope="scope">{{ scope.row.CreatedAt | formatDateTime }}</template>
@@ -56,21 +48,21 @@
     />
 
     <el-dialog
-      title="添加用户"
+      title="添加角色"
       :visible.sync="dialogAdd"
       :close-on-click-modal="false"
     >
       <el-form :model="formAdd">
-        <el-form-item label="用 户 名" :label-width="formLabelWidth">
-          <el-input v-model="formAdd.username" />
+        <el-form-item label="角 色 名" :label-width="formLabelWidth">
+          <el-input v-model="formAdd.name" />
         </el-form-item>
-        <el-form-item label="默认密码" :label-width="formLabelWidth">
-          <el-input v-model="formAdd.password" show-password />
+        <el-form-item label="描    述" :label-width="formLabelWidth">
+          <el-input v-model="formAdd.desc" />
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth">
-          <el-select v-model="formAdd.Rid" multiple placeholder="请选择">
+        <el-form-item label="角色权限" :label-width="formLabelWidth">
+          <el-select v-model="formAdd.rid" multiple placeholder="请选择">
             <el-option
-              v-for="item in roles"
+              v-for="item in perms"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -85,18 +77,21 @@
     </el-dialog>
 
     <el-dialog
-      title="修改用户"
+      title="修改角色"
       :visible.sync="dialogEdit"
       :close-on-click-modal="false"
     >
       <el-form :model="formEdit">
-        <el-form-item label="昵    称" :label-width="formLabelWidth">
-          <el-input v-model="formEdit.nick" />
+        <el-form-item label="角 色 名" :label-width="formLabelWidth">
+          <el-input v-model="formEdit.name" />
         </el-form-item>
-        <el-form-item label="用户角色" :label-width="formLabelWidth">
-          <el-select v-model="formEdit.Rid" multiple placeholder="请选择">
+        <el-form-item label="描   述" :label-width="formLabelWidth">
+          <el-input v-model="formEdit.desc" />
+        </el-form-item>
+        <el-form-item label="角色权限" :label-width="formLabelWidth">
+          <el-select v-model="formEdit.rid" multiple placeholder="请选择">
             <el-option
-              v-for="item in roles"
+              v-for="item in perms"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -114,26 +109,26 @@
 
 <script>
 import {
-  fetchUserList,
   fetchRoleList,
-  fetchUser,
-  deleteUser,
-  createUser,
-  // updateUser,
+  fetchPermList,
+  fetchRole,
+  deleteRole,
+  createRole,
+  // updateRole,
 } from '@/api/system'
 import Pagination from '@/components/Pagination'
 
 export default {
   components: { Pagination },
   filters: {
-    formatRoles(items, roles) {
+    formatPerms(items, perms) {
       // TODO: check
       // if (!items) {
       //   return "Unknow"
       // }
       items = [1, 3]
 
-      return roles.filter(({ id }) => {
+      return perms.filter(({ id }) => {
         if (items.indexOf(id) > -1) {
           return true
         }
@@ -153,7 +148,7 @@ export default {
       },
       ids: [],
 
-      roles: [],
+      perms: [],
 
       formLabelWidth: '70px',
       dialogAdd: false,
@@ -166,9 +161,9 @@ export default {
     this.getList()
   },
   methods: {
-    getRoles() {
-      // TODO: fetch all roles
-      return fetchRoleList({
+    getPerms() {
+      // TODO: fetch all Perms
+      return fetchPermList({
         page: 1,
         size: 100,
       }).then(response => {
@@ -180,18 +175,18 @@ export default {
         })
       })
     },
-    getUsers() {
-      return fetchUserList(this.listQuery).then(response => {
+    getRoles() {
+      return fetchRoleList(this.listQuery).then(response => {
         return response.data
       })
     },
 
     getList() {
       this.listLoading = true
-      return Promise.all([this.getRoles(), this.getUsers()]).then(([roles, users]) => {
-        this.roles = roles
-        this.list = users.items
-        this.total = users.total
+      return Promise.all([this.getPerms(), this.getRoles()]).then(([perms, roles]) => {
+        this.perms = perms
+        this.list = roles.items
+        this.total = roles.total
         this.listLoading = false
       })
     },
@@ -201,13 +196,13 @@ export default {
 
     showAdd() {
       this.formAdd = {
-        Rid: [],
+        rid: [],
       }
       this.dialogAdd = true
     },
     add() {
       console.log('add', this.formAdd)
-      createUser(this.formAdd).then(res => {
+      createRole(this.formAdd).then(res => {
         this.$alert('添加成功')
         this.getList().then(() => {
           this.dialogAdd = false
@@ -217,12 +212,12 @@ export default {
       })
     },
     showEdit(id) {
-      fetchUser(id).then(res => {
-        const { nick } = res.data
+      fetchRole(id).then(res => {
+        const { Name: name, Desc: desc } = res.data
         this.formEdit = {
-          id,
-          nick,
-          Rid: [], // TODO
+          name,
+          desc,
+          rid: [], // TODO
         }
         this.dialogEdit = true
       })
@@ -233,14 +228,14 @@ export default {
     },
     delAll() {
       const ids = this.ids.join(',')
-      deleteUser(ids).then(res => {
+      deleteRole(ids).then(res => {
         this.getList().then(() => {
           this.$alert('删除成功')
         })
       })
     },
     del(id) {
-      deleteUser(id).then(res => {
+      deleteRole(id).then(res => {
         this.getList().then(() => {
           this.$alert('删除成功')
         })
@@ -251,11 +246,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.avatar {
-  width: 30px;
-  height: 30px;
-}
-
 .el-dialog {
   .el-select {
     width: 100%;

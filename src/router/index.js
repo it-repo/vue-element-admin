@@ -138,6 +138,9 @@ export const componentMap = {
   'views/box/free': () => import('@/views/box/free'),
   'views/system/log': () => import('@/views/system/log'),
   'views/system/user': () => import('@/views/system/user'),
+  'views/system/role': () => import('@/views/system/role'),
+  'views/system/perm': () => import('@/views/system/perm'),
+  'views/system/route': () => import('@/views/system/route'),
 }
 
 /**
